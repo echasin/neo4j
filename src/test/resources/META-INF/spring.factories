@@ -1,0 +1,2 @@
+org.springframework.test.context.ContextCustomizerFactory = com.uscis.dbis.\
+    config.Neo4jTestContainersSpringContextCustomizerFactory
