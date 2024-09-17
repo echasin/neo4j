@@ -42,9 +42,9 @@ spring:
       metrics-enabled: true
     uri: bolt://localhost:7687
     # Uncomment to use an authenticated connection
-    # authentication:
-    #   username: neo4j
-    #   password: secret
+    authentication:
+      username: neo4j
+      password: secret
   mail:
     host: localhost
     port: 25
@@ -56,7 +56,7 @@ spring:
     cache: false
 
 server:
-  port: 8080
+  port: 8082
   # make sure requests the proxy uri instead of the server one
   forward-headers-strategy: native
 
