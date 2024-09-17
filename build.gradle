@@ -156,6 +156,7 @@ dependencies {
     testImplementation "org.testcontainers:neo4j"
     testImplementation "org.testcontainers:testcontainers"
     // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+    implementation 'org.neo4j.driver:neo4j-java-driver:5.10.0'
 }
 
 task cleanResources(type: Delete) {
