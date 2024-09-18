@@ -10,10 +10,13 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Person.class)
-@Node("person")
+/**
+ * A Example.
+ */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Example.class)
+@Node("example")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Person implements Serializable {
+public class Example implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,7 +34,7 @@ public class Person implements Serializable {
         return this.id;
     }
 
-    public Person id(String id) {
+    public Example id(String id) {
         this.setId(id);
         return this;
     }
@@ -44,7 +47,7 @@ public class Person implements Serializable {
         return this.name;
     }
 
-    public Person name(String name) {
+    public Example name(String name) {
         this.setName(name);
         return this;
     }
@@ -60,10 +63,10 @@ public class Person implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Person)) {
+        if (!(o instanceof Example)) {
             return false;
         }
-        return getId() != null && getId().equals(((Person) o).getId());
+        return getId() != null && getId().equals(((Example) o).getId());
     }
 
     @Override
@@ -75,7 +78,7 @@ public class Person implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "Person{" +
+        return "Example{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             "}";
