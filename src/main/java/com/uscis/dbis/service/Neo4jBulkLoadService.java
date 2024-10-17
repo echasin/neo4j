@@ -29,7 +29,7 @@ public class Neo4jBulkLoadService implements AutoCloseable {
         try (Session session = driver.session()) {
             String fileUrl = s3BaseUrl + "/" + fileName;
             String cypher = String.format(
-                "LOAD CSV WITH HEADERS FROM '%s' AS row " + "MERGE (p:Person {id: row.id}) " + "SET p.name = row.name",
+                "LOAD CSV WITH HEADERS FROM '%s' AS row " + "MERGE (p:person {id: row.id}) " + "SET p.name = row.name",
                 fileUrl
             );
 

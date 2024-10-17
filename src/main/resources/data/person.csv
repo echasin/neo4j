@@ -1,11 +1,11 @@
-id,name
-1,John Doe
-2,Jane Smith
-3,Mike Johnson
-4,Emily Brown
-5,David Lee
-6,Sarah Wilson
-7,Tom Anderson
-8,Lisa Garcia
-9,Robert Taylor
-10,Emma Martinez
+id,name,label
+1,John Doe,person
+2,Jane Smith,person
+3,Mike Johnson,person
+4,Emily Brown,person
+5,David Lee,person
+6,Sarah Wilson,person
+7,Tom Anderson,person
+8,Lisa Garcia,person
+9,Robert Taylor,person
+10,Emma Martinez,person

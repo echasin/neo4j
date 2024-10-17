@@ -17,7 +17,7 @@ public class CSVLoaderResource {
         this.neo4jBulkLoadService = neo4jBulkLoadService;
     }
 
-    @PostMapping("/load-csv")
+    @PostMapping("/person/load-csv")
     public ResponseEntity<String> loadCSV(@RequestParam String fileName) {
         try {
             String result = neo4jBulkLoadService.loadCSV(fileName);
