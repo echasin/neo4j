@@ -48,10 +48,8 @@ spring:
 
   # CSV file configuration
   csv:
-    base:
-      #path: data/csv
-      path: /Users/ericchasin/github/neo4j/src/main/resources/data
-      url: file:///Users/ericchasin/github/neo4j/src/main/resources/data
+    s3:
+      base-url: https://neo4j-mock-data.s3.amazonaws.com
   mail:
     host: localhost
     port: 25
