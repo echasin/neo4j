@@ -25,7 +25,7 @@ public class Neo4jBulkLoadService implements AutoCloseable {
         driver.close();
     }
 
-    public String loadCSV(String fileName) {
+    public String loadPersonCSV(String fileName) {
         try (Session session = driver.session()) {
             String fileUrl = s3BaseUrl + "/" + fileName;
             String cypher = String.format(
@@ -41,6 +41,29 @@ public class Neo4jBulkLoadService implements AutoCloseable {
             );
         } catch (Exception e) {
             return "Error during CSV import: " + e.getMessage();
+        }
+    }
+
+    public String loadPersonPersonEdges(String fileName) {
+        try (Session session = driver.session()) {
+            String fileUrl = s3BaseUrl + "/" + fileName;
+            String cypher =
+                "LOAD CSV WITH HEADERS FROM $fileUrl AS row " +
+                "MATCH (source:person {id: row.source_id}) " +
+                "MATCH (target:person {id: row.target_id}) " +
+                "CALL { " +
+                "  WITH source, target, row " +
+                "  MERGE (source)-[r:PERSON_RELATIONSHIP]->(target) " +
+                "  SET r.type = row.relationship_type " +
+                "} IN TRANSACTIONS OF 1000 ROWS";
+
+            Result result = session.run(cypher, Values.parameters("fileUrl", fileUrl));
+            return String.format(
+                "Relationship import successful. Relationships created: %d",
+                result.consume().counters().relationshipsCreated()
+            );
+        } catch (Exception e) {
+            return "Error during relationship import: " + e.getMessage();
         }
     }
 }

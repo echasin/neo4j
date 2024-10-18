@@ -20,11 +20,17 @@ public class CSVLoaderResource {
     @PostMapping("/person/load-csv")
     public ResponseEntity<String> loadCSV(@RequestParam String fileName) {
         try {
-            String result = neo4jBulkLoadService.loadCSV(fileName);
+            String result = neo4jBulkLoadService.loadPersonCSV(fileName);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error loading CSV: " + e.getMessage() + "\nStack trace: " + getStackTrace(e));
         }
+    }
+
+    @PostMapping("/person_person/load-csd")
+    public ResponseEntity<String> loadRelationships(@RequestParam String fileName) {
+        String result = neo4jBulkLoadService.loadPersonPersonEdges(fileName);
+        return ResponseEntity.ok(result);
     }
 
     private String getStackTrace(Exception e) {
