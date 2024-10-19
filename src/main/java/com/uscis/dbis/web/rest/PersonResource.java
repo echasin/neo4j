@@ -54,5 +54,18 @@ public class PersonResource {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    /**
+     * POST /persons/search : Search for persons based on dynamic properties.
+     *
+     * @param properties the filtering properties to search persons by.
+     * @return the ResponseEntity with status 200 (OK) and the list of persons in the body.
+     */
+    @PostMapping("/persons/search")
+    public ResponseEntity<List<Person>> searchPersons(@RequestBody Map<String, Object> properties) {
+        LOG.debug("REST request to search Persons by properties: {}", properties);
+        List<Person> result = personService.findByProperties(properties);
+        return ResponseEntity.ok(result);
+    }
     // Add other CRUD endpoints (POST, PUT, DELETE) as needed
 }

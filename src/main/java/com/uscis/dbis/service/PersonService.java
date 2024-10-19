@@ -2,8 +2,13 @@ package com.uscis.dbis.service;
 
 import com.uscis.dbis.domain.Person;
 import com.uscis.dbis.repository.PersonRepository;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List; // Correct import for List
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import org.neo4j.driver.types.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -104,6 +109,46 @@ public class PersonService {
             return result;
         } catch (Exception e) {
             LOG.error("Error executing graph query", e);
+            throw e;
+        }
+    }
+
+    public List<Person> findByProperties(Map<String, Object> properties) {
+        LOG.debug("Request to find Person by properties: {}", properties);
+
+        if (properties.isEmpty()) {
+            return personRepository.findAll();
+        }
+
+        // Build the query
+        String filters = properties
+            .entrySet()
+            .stream()
+            .map(entry -> "p." + entry.getKey() + " = $" + entry.getKey())
+            .collect(Collectors.joining(" AND "));
+
+        String query = "MATCH (p:person) WHERE " + filters + " RETURN p";
+
+        try {
+            Collection<Person> result = neo4jClient
+                .query(query)
+                .bindAll(properties)
+                .fetchAs(Person.class)
+                .mappedBy((typeSystem, record) -> {
+                    Node node = record.get("p").asNode();
+                    Person person = new Person();
+                    //person.setId(node.elementId()); // Use elementId() instead of id()
+                    person.setId(node.get("id").asString(null));
+                    person.setName(node.get("name").asString(null));
+                    // Map other properties as needed
+                    return person;
+                })
+                .all();
+
+            LOG.debug("Query result: {}", result);
+            return new ArrayList<>(result);
+        } catch (Exception e) {
+            LOG.error("Error executing query", e);
             throw e;
         }
     }
