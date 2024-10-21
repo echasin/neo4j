@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
+// import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
-import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
+
+// import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Person.class)
 @Node("person")
@@ -18,7 +19,7 @@ public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(UUIDStringGenerator.class)
+    // @GeneratedValue(UUIDStringGenerator.class)
     private String id;
 
     @NotNull
